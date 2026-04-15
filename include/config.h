@@ -23,4 +23,7 @@ static const uint8_t OLED_I2C_ADDR = 0x3C; // 0x3C;  // try 0x3D if the display 
 
 // Sensor read interval (ms); DHT21 needs >= ~2 s between reads
 static const unsigned long SENSOR_INTERVAL_MS = 2500;
-static const unsigned long MQTT_INTERVAL_MS = 60000;
+// MQTT: one payload per window; temp/moist are medians of valid samples in this period
+static const unsigned long MQTT_PUBLISH_INTERVAL_MS = 60UL * 1000UL;
+// Upper bound on samples per window (60 s / 2.5 s ≈ 24; keep margin)
+static constexpr int MQTT_MAX_SAMPLES_PER_WINDOW = 32;
